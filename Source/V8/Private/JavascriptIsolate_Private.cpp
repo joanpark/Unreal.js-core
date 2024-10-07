@@ -1788,8 +1788,8 @@ public:
 			auto Function = reinterpret_cast<UFunction*>((Local<External>::Cast(info.Data()))->Value());
 
 			// Determine 'this'
-			auto Object = (Function->FunctionFlags & FUNC_Static) ? Function->GetOwnerClass()->ClassDefaultObject : UObjectFromV8(isolate->GetCurrentContext(), self);
-
+			TObjectPtr<UObject> Object = (Function->FunctionFlags & FUNC_Static) ? Function->GetOwnerClass()->ClassDefaultObject.Get() : UObjectFromV8(isolate->GetCurrentContext(), self);
+			
 			// Check 'this' is valid
 			if (!IsValid(Object))
 			{
